@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TodoList.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TodoList.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="TodoList">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <DockPanel>
+        <TextBlock Background="IndianRed" DockPanel.Dock="Top" Foreground="White" Padding="15" FontSize="20" FontStretch="UltraCondensed">Todo List</TextBlock>
+        <DockPanel>
+            <TextBox DockPanel.Dock="Bottom" Margin="15" Padding="15" Watermark="What is in your thought?" Text="{Binding TextboxValue}">
+                <TextBox.KeyBindings>
+                    <KeyBinding Gesture="Enter" Command="{Binding AddTextBoxValueToListCommand}" />
+                </TextBox.KeyBindings>
+                <TextBox.InnerRightContent><Button Padding="10 5" Margin="10 0" Command="{Binding AddTextBoxValueToListCommand}">Add</Button></TextBox.InnerRightContent>
+            </TextBox>
+            <DataGrid CanUserResizeColumns="True" GridLinesVisibility="All" BorderThickness="2" Margin="15" ItemsSource="{Binding Items}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="2*" Header="Item" Binding="{Binding Description}" />
+                    <DataGridCheckBoxColumn Width="0.5*" Header="Completed?" Binding="{Binding IsDone}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+    </DockPanel>
+
+</Window>
